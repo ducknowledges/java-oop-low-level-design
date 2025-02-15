@@ -1,0 +1,108 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'jacoco'
+    id "com.diffplug.spotless" version "6.23.3"
+}
+
+group = 'com.github.ducknowledges'
+version = '1.0-SNAPSHOT'
+
+wrapper {
+    gradleVersion '8.12'
+}
+
+// Plugin Config
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+idea {
+    project {
+        languageLevel = 17
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+spotless {
+    java {
+        removeUnusedImports()
+        googleJavaFormat('1.25.2')
+        formatAnnotations()
+    }
+}
+
+//Dependencies
+ext {
+    bom = [
+            //BOM versions
+            'springBoot': '3.4.2',
+    ]
+    versions = [
+            //Dependencies version
+    ]
+}
+
+dependencies {
+    //Import a BOM
+    implementation platform("org.springframework.boot:spring-boot-dependencies:${bom.springBoot}")
+
+    //Dependencies
+
+    //Processors
+
+    //Test Dependencies
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+    //Integration Test Dependencies
+
+}
+
+//Dependencies resolver
+configurations.configureEach {
+    resolutionStrategy.failOnVersionConflict()
+    //testCompileClasspath
+    resolutionStrategy.force 'org.hamcrest:hamcrest:2.2'
+    resolutionStrategy.force 'net.bytebuddy:byte-buddy:1.15.11'
+    resolutionStrategy.force 'net.bytebuddy:byte-buddy-agent:1.15.11'
+    //testRuntimePath
+    resolutionStrategy.force 'org.junit.jupiter:junit-jupiter-api:5.11.4'
+    resolutionStrategy.force 'org.slf4j:slf4j-api:2.0.16'
+    resolutionStrategy.force 'net.minidev:json-smart:2.5.1'
+}
+
+//Build Project
+build {
+    dependsOn shadowJar
+}
+
+compileJava {
+    dependsOn spotlessApply
+}
+
+jar {
+    enabled = true
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.outputLocation = layout.buildDirectory.dir('jacoco')
+    }
+    dependsOn test
+}
+
+// Dependencies repository
+repositories {
+    mavenCentral()
+}
