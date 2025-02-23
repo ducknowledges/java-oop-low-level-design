@@ -84,7 +84,7 @@ public abstract class LinkedList<T> {
     /** Constructor
      * Creates a new LinkedList
      *
-     * @Post-condition: создан новый пустой список
+     * @Post-condition: a new empty list was created
      */
     LinkedList() {
 
@@ -169,7 +169,7 @@ public abstract class LinkedList<T> {
      * @Command
      * Adds a value to an empty list.
      *
-     * @Pre-condition: the list is not empty
+     * @Pre-condition: the list is empty
      * @Post-condition: value is added to the list and becomes current
      *
      * @param value the value to be added to the empty list
