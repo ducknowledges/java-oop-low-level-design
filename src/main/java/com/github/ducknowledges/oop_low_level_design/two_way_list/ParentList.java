@@ -310,19 +310,17 @@ public abstract class ParentList<E> {
      * @param element the element to search for in the list
      */
     void find(E element) {
+        this.findStatus = FIND_ERR;
         if (isValue()) {
             Node<E> currentNode = this.current;
             while (!(currentNode.getNext() instanceof DumbTail)) {
                 currentNode = currentNode.getNext();
-                if (currentNode.getElement().equals(element)) {
+                if ( Objects.equals(currentNode.getElement(), element)) {
                     this.current = currentNode;
                     this.findStatus = FIND_OK;
-                    break;
+                    return;
                 }
-                this.findStatus = FIND_ERR;
             }
-        } else {
-            this.findStatus = FIND_ERR;
         }
     }
 
