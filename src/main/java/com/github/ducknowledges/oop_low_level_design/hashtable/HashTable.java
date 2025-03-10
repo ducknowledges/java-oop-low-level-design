@@ -29,8 +29,8 @@ public class HashTable<E> {
 
     /**
      * @Constructor
-     * Creates a new queue with a default size
-     * @Post-condition: a new empty queue of a default size was created
+     * Creates a new hash table with initial capacity
+     * @Post-condition: a new empty hash table with initial capacity was created
      */
     public HashTable(int capacity) {
         this.capacity = capacity;
