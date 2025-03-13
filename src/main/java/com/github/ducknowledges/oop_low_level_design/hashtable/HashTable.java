@@ -19,9 +19,9 @@ public class HashTable<E> {
     public static final int REMOVE_ERR = 2;
 
 
-    private final int capacity;
+    protected final int capacity;
     private final int step;
-    private E[] slots;
+    protected E[] slots;
     private int size;
 
     private int putStatus;
@@ -210,6 +210,32 @@ public class HashTable<E> {
         }
 
         return Math.abs(element.hashCode()) % this.capacity;
+    }
+
+    /**
+     * @Query
+     * Returns the status of put() query
+     *
+     * @return one of the following statuses:
+     *          {@link #PUT_NIL} if put() was not invoked
+     *          {@link #PUT_OK}  if last put() returned correct result
+     *          {@link #PUT_ERR} if put() has error
+     */
+    public int getPutStatus() {
+        return this.putStatus;
+    }
+
+    /**
+     * @Query
+     * Returns the status of remove() query
+     *
+     * @return one of the following statuses:
+     *          {@link #REMOVE_NIL} if remove() was not invoked
+     *          {@link #REMOVE_OK}  if last remove() returned correct result
+     *          {@link #REMOVE_ERR} if remove() has error
+     */
+    public int getRemoveStatus() {
+        return this.removeStatus;
     }
 
 }
